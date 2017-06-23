@@ -1,5 +1,19 @@
 //: Playground - noun: a place where people can play
 
-import UIKit
+import Foundation
+enum EntityType :String  {
 
-var str = "Hello, playground"
+    case ItemType = "ItemType"
+    case BinType = "BinType"
+    case LocationType = "LocationType"
+}
+    
+var entityType  = EntityType(rawValue : "BinType" )
+
+if entityType == .BinType{
+    print (true)
+}
+print(entityType!.rawValue)
+
+
+
