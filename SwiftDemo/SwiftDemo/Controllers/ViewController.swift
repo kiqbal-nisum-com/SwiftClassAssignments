@@ -52,6 +52,10 @@ class ViewController: UIViewController,ViewControllerProtocol {
         binLocModel = BinLocModel()
         self.binLocModel!.getAllEntityBaseModel()
         self.title = "Bin View"
+        
+        NetworkOperations.sharedInstance.getAllData(dataType: AppConstant.allData,completionHandler:  { (responseDict, success) in
+            
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,6 +71,8 @@ class ViewController: UIViewController,ViewControllerProtocol {
 //            let item = Item(itemnName: itemText.text, bin: Bin(binName: binText.text, location: Location(locationName: locationText.text)),qty : self.qtyText.text!)
 //        self.binLocModel?.items.append(item)
 //        }
+        
+        let context = CoreDataManager.shared.viewContext
         if binText!.text!.isEmpty{
             self.showErrorAlert(title: " Empty Field", message: EmptyFieldError.BinFieldEmpty.rawValue)
             return
@@ -75,14 +81,14 @@ class ViewController: UIViewController,ViewControllerProtocol {
             return
         }
         
-        let bin : BinModel = self.getCoreDataManagerObject().fetechRequest(entityName: CoreDataModelName.BinModel.rawValue, predicate: NSPredicate(format: "name = %@", self.binText.text!))![0] as! BinModel
-        let itemModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue) as! ItemModel
+        let bin : BinModel = self.getCoreDataManagerObject().fetechRequest(entityName: CoreDataModelName.BinModel.rawValue, predicate: NSPredicate(format: "name = %@", self.binText.text!),context: context)![0] as! BinModel
+        let itemModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context) as! ItemModel
         itemModel.setItem(itemDic: [
                                 "name":self.itemText.text!,
                                 "bin":bin,
                                 "quantity" : Int16(self.qtyText.text!)!
             
-                                ])
+                                ], context: context)
         getCoreDataManagerObject().saveViewContext()
     }
  
@@ -185,7 +191,7 @@ extension ViewController : UITextFieldDelegate{
 extension ViewController{
 
     func showAlertController(entityType : EntityType, sender : UIButton?){
-        
+        let context = CoreDataManager.shared.viewContext
         let alertController = UIAlertController(title: "\(entityType)", message: "Please Add \(entityType)", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel,handler: { (action) -> Void in
             alertController.dismiss(animated: true, completion: nil)
@@ -204,21 +210,21 @@ extension ViewController{
                         self.showErrorAlert(title: "Empty Location", message: "Please Select Location first")
                         return
                     }
-                    let binModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.BinModel.rawValue) as! BinModel
+                    let binModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context:context ) as! BinModel
                     binModel.setBin(binDict:[
                         "name": alertController.textFields!.first!.text!,
-                        "location":self.getCoreDataManagerObject().fetechRequest(entityName: CoreDataModelName.LocationModel.rawValue, predicate: NSPredicate(format: "name = %@", self.locationText.text!))!.first as! LocationModel
-                        ])
+                        "location":self.getCoreDataManagerObject().fetechRequest(entityName: CoreDataModelName.LocationModel.rawValue, predicate: NSPredicate(format: "name = %@", self.locationText.text!),context:context)!.first as! LocationModel
+                        ],context: context)
                     self.getCoreDataManagerObject().saveViewContext()
                     self.binLocModel?.addElement(name: alertController.textFields!.first!.text!)
                     self.binLocModel?.setName()
                     self.setTitle(name: (alertController.textFields?.first?.text)!)
                     
                 } else{
-                    let locModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue) as! LocationModel
+                    let locModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context) as! LocationModel
                     locModel.setLocation(locDict: [
                         "name": alertController.textFields!.first!.text!,
-                        ])
+                        ], context: context)
                     self.getCoreDataManagerObject().saveViewContext()
                     self.binLocModel?.addElement(name: alertController.textFields!.first!.text!)
                     self.binLocModel?.setName()

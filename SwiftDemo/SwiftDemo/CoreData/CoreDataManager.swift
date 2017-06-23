@@ -257,9 +257,9 @@ public final class CoreDataManager {
         return appSupportURL.appendingPathComponent(CoreDataManager.persistentCoordinatorPath)
     }()
     
-    func fetechRequest(entityName: String! , predicate :NSPredicate?)-> [NSManagedObject]?{
+    func fetechRequest(entityName: String! , predicate :NSPredicate?,context : NSManagedObjectContext)-> [NSManagedObject]?{
         
-            let context = self.viewContext
+            
             let fetechRequest:NSFetchRequest<NSManagedObject> = NSFetchRequest<NSManagedObject>(entityName: entityName)
             if let _ = predicate{
                 fetechRequest.predicate = predicate
@@ -279,15 +279,15 @@ public final class CoreDataManager {
             
         }
     
-    func saveManageObject( managedObject : NSManagedObject!){
+    func saveManageObject( managedObject : NSManagedObject!,context: NSManagedObjectContext){
         
-            self.viewContext.insert(managedObject)
-            self.save(context: self.viewContext)
+            context.insert(managedObject)
+            self.save(context: context)
     }
     
-    func deleteManageObject(managedObject : NSManagedObject){
-            self.viewContext.delete(managedObject)
-            self.save(context: self.viewContext)
+    func deleteManageObject(managedObject : NSManagedObject,context:NSManagedObjectContext){
+            context.delete(managedObject)
+            self.save(context: context)
         
     }
     func id<U>(object: AnyObject) -> U? {
@@ -298,10 +298,10 @@ public final class CoreDataManager {
         return nil
     }
     
-    func newManagedObject (entityName:String) -> NSManagedObject?{
+    func newManagedObject (entityName:String, context: NSManagedObjectContext) -> NSManagedObject?{
         
-            let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: self.viewContext)
-            let managedObj =  NSManagedObject(entity: entityDescription!, insertInto: self.viewContext)
+            let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context)
+            let managedObj =  NSManagedObject(entity: entityDescription!, insertInto: context)
             return managedObj;
         
     }

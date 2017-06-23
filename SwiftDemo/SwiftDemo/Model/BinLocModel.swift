@@ -71,6 +71,6 @@ class BinLocModel: NSObject {
     
     func getAllEntityBaseModel(){
     
-        self.entityBaseModel =  CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.EntityBaseModel.rawValue, predicate: nil) as? [EntityBaseModel]
+        self.entityBaseModel =  CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.EntityBaseModel.rawValue, predicate: nil, context: CoreDataManager.shared.viewContext) as? [EntityBaseModel]
     }
 }
