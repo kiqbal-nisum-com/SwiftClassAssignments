@@ -300,10 +300,8 @@ public final class CoreDataManager {
     
     func newManagedObject (entityName:String) -> NSManagedObject?{
         
-        
             let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: self.viewContext)
             let managedObj =  NSManagedObject(entity: entityDescription!, insertInto: self.viewContext)
-            
             return managedObj;
         
     }

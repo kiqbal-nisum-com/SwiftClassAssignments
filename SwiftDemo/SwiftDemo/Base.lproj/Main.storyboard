@@ -264,7 +264,14 @@
                             <outlet property="delegate" destination="SO9-6G-XAz" id="W4M-x6-wKP"/>
                         </connections>
                     </tableView>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="gls-9h-Xp8">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refreshControlHandler:" destination="SO9-6G-XAz" eventType="valueChanged" id="hHi-NW-oXG"/>
+                        </connections>
+                    </refreshControl>
                     <connections>
+                        <outlet property="refreshControlHandler" destination="gls-9h-Xp8" id="Z6M-Ii-dyU"/>
                         <outlet property="tableView" destination="D3W-nD-Kfj" id="4Tj-ve-FBS"/>
                         <segue destination="jKx-OL-X8R" kind="unwind" identifier="BackToBin" unwindAction="unwindToMenuWithSegue:" id="AZd-3F-n51"/>
                     </connections>

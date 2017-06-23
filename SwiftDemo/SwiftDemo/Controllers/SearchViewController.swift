@@ -7,9 +7,11 @@
 //
 
 import UIKit
-
+import CoreData
 class SearchViewController: UITableViewController {
     
+    
+    @IBOutlet weak var refreshControlHandler: UIRefreshControl!
     var EntityObjects : [EntityBaseModel]? = [EntityBaseModel]()
     var filteredArray : [EntityBaseModel]? = [EntityBaseModel]()
     var selectedItem : ItemModel?
@@ -19,6 +21,10 @@ class SearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing")
+        self.tableView.refreshControl = refreshControl
+        self.refreshControl?.addTarget(self, action:#selector(SearchViewController.refreshControlHandler(_:)) , for: .valueChanged)
         searchController.searchBar.scopeButtonTitles = scoopButtonTitles
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
@@ -75,6 +81,20 @@ class SearchViewController: UITableViewController {
             self.performSegue(withIdentifier: AppConstant.backToBinControllerSegueIdentifier, sender: self)
         }
     }
+     func refreshControlHandler(_ sender: UIRefreshControl) {
+        filteredArray?.append((filteredArray?[0])!)
+        self.refreshControl?.endRefreshing()
+        self.tableView.reloadData()
+        
+    }
+
+}
+
+//MARK: - IBACTIONS
+extension SearchViewController{
+
+
+
 
 }
 //MARK: - SearchResult Update delegate
@@ -117,6 +137,21 @@ extension SearchViewController{
             tableView.reloadData()
         }
     }
+}
+
+//Mark: - NSFetechResult Controller Delegate
+extension SearchViewController: NSFetchedResultsControllerDelegate{
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+    }
+    
+    
+
 }
 
 
