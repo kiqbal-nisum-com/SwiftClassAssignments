@@ -10,7 +10,7 @@ import UIKit
 
 class Location:EntityProtocol {
     var name: String?
-    var entityType: EntityType {return .LocationType}
+    var entityType: EntityType {return .Location}
     
     init(locationName : String?){
     

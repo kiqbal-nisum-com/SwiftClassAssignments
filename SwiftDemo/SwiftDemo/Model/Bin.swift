@@ -10,7 +10,7 @@ import UIKit
 
 class Bin: EntityProtocol {
     var name: String?
-    var entityType: EntityType {return .BinType}
+    var entityType: EntityType {return .Bin}
      var location : Location?
     
     init(binName : String?, location : Location?){

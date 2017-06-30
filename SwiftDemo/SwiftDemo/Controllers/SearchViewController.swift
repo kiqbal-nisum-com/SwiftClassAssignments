@@ -31,7 +31,6 @@ class SearchViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +53,7 @@ class SearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstant.searchViewControllerCellIdentifier)
         
-        switch (CoreDataModelName(rawValue :filteredArray![indexPath.row].entityTypeModel))!{
+        switch (CoreDataModelName(rawValue :filteredArray![indexPath.row].entityTypeModel!))!{
         
         case .ItemModel :
             cell?.textLabel?.text = "Item name : \((filteredArray![indexPath.row]).name ?? "")"
@@ -92,8 +91,6 @@ class SearchViewController: UITableViewController {
 
 //MARK: - IBACTIONS
 extension SearchViewController{
-
-
 
 
 }

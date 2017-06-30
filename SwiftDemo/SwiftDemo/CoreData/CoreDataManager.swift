@@ -276,7 +276,6 @@ public final class CoreDataManager {
                 print("Error with request: \(error)")
                 return nil
             }
-            
         }
     
     func saveManageObject( managedObject : NSManagedObject!,context: NSManagedObjectContext){
@@ -303,8 +302,6 @@ public final class CoreDataManager {
             let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context)
             let managedObj =  NSManagedObject(entity: entityDescription!, insertInto: context)
             return managedObj;
-        
     }
-
-    
 }
+
