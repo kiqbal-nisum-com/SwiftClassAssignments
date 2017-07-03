@@ -26,8 +26,6 @@
 		D5EC7C771EFA7ED3001D338E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C761EFA7ED3001D338E /* CoreDataManager.swift */; };
 		D5EC7C801EFA8F2E001D338E /* BinModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C781EFA8F2E001D338E /* BinModel+CoreDataClass.swift */; };
 		D5EC7C811EFA8F2E001D338E /* BinModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C791EFA8F2E001D338E /* BinModel+CoreDataProperties.swift */; };
-		D5EC7C821EFA8F2E001D338E /* EntityBaseModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C7A1EFA8F2E001D338E /* EntityBaseModel+CoreDataClass.swift */; };
-		D5EC7C831EFA8F2E001D338E /* EntityBaseModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C7B1EFA8F2E001D338E /* EntityBaseModel+CoreDataProperties.swift */; };
 		D5EC7C841EFA8F2E001D338E /* ItemModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C7C1EFA8F2E001D338E /* ItemModel+CoreDataClass.swift */; };
 		D5EC7C851EFA8F2E001D338E /* ItemModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C7D1EFA8F2E001D338E /* ItemModel+CoreDataProperties.swift */; };
 		D5EC7C861EFA8F2E001D338E /* LocationModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EC7C7E1EFA8F2E001D338E /* LocationModel+CoreDataClass.swift */; };
@@ -58,8 +56,6 @@
 		D5EC7C761EFA7ED3001D338E /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D5EC7C781EFA8F2E001D338E /* BinModel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BinModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D5EC7C791EFA8F2E001D338E /* BinModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BinModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		D5EC7C7A1EFA8F2E001D338E /* EntityBaseModel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntityBaseModel+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D5EC7C7B1EFA8F2E001D338E /* EntityBaseModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EntityBaseModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D5EC7C7C1EFA8F2E001D338E /* ItemModel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D5EC7C7D1EFA8F2E001D338E /* ItemModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D5EC7C7E1EFA8F2E001D338E /* LocationModel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LocationModel+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -149,8 +145,6 @@
 			children = (
 				D5EC7C781EFA8F2E001D338E /* BinModel+CoreDataClass.swift */,
 				D5EC7C791EFA8F2E001D338E /* BinModel+CoreDataProperties.swift */,
-				D5EC7C7A1EFA8F2E001D338E /* EntityBaseModel+CoreDataClass.swift */,
-				D5EC7C7B1EFA8F2E001D338E /* EntityBaseModel+CoreDataProperties.swift */,
 				D5EC7C7C1EFA8F2E001D338E /* ItemModel+CoreDataClass.swift */,
 				D5EC7C7D1EFA8F2E001D338E /* ItemModel+CoreDataProperties.swift */,
 				D5EC7C7E1EFA8F2E001D338E /* LocationModel+CoreDataClass.swift */,
@@ -258,7 +252,6 @@
 				D5EC7C851EFA8F2E001D338E /* ItemModel+CoreDataProperties.swift in Sources */,
 				D5063DB51EF3787400A921CB /* Item.swift in Sources */,
 				D5063DCE1EF3789B00A921CB /* ViewControllerProtocol.swift in Sources */,
-				D5EC7C821EFA8F2E001D338E /* EntityBaseModel+CoreDataClass.swift in Sources */,
 				D5063DB41EF3787400A921CB /* BinLocModel.swift in Sources */,
 				D5063DD51EFA50A800A921CB /* SwiftDemo.xcdatamodeld in Sources */,
 				D5EC7C811EFA8F2E001D338E /* BinModel+CoreDataProperties.swift in Sources */,
@@ -267,7 +260,6 @@
 				D5EC7C771EFA7ED3001D338E /* CoreDataManager.swift in Sources */,
 				D5063DCA1EF3789B00A921CB /* NewValueViewController.swift in Sources */,
 				D5EC7C871EFA8F2E001D338E /* LocationModel+CoreDataProperties.swift in Sources */,
-				D5EC7C831EFA8F2E001D338E /* EntityBaseModel+CoreDataProperties.swift in Sources */,
 				D5063DB31EF3787400A921CB /* Bin.swift in Sources */,
 				D5063DB61EF3787400A921CB /* Location.swift in Sources */,
 				D5063D821EEFD41E00A921CB /* AppDelegate.swift in Sources */,
