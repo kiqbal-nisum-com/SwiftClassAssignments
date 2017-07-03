@@ -17,24 +17,24 @@ class SearchViewController: UITableViewController {
     var selectedItem : ItemModel?
   
     let searchController = UISearchController(searchResultsController: nil)
-    let scoopButtonTitles = ["All",CoreDataModelName.ItemModel.rawValue,CoreDataModelName.BinModel.rawValue,CoreDataModelName.LocationModel.rawValue]
+    let scoopButtonTitles = ["All",EntityType.Item.rawValue,EntityType.Bin.rawValue,EntityType.Location.rawValue]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        CoreDataManager.shared.persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
-            if let error = error {
-                print("Unable to Load Persistent Store")
-                print("\(error), \(error.localizedDescription)")
-            } else {
-                do {
-                    try CoreDataManager.shared.fetchedResultsController.performFetch()
-                } catch {
-                    let fetchError = error as NSError
-                    print("Unable to Perform Fetch Request")
-                    print("\(fetchError), \(fetchError.localizedDescription)")
-                }
-            }
-        }
+//        CoreDataManager.shared.persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
+//            if let error = error {
+//                print("Unable to Load Persistent Store")
+//                print("\(error), \(error.localizedDescription)")
+//            } else {
+//                do {
+//                    try CoreDataManager.shared.fetchedResultsController.performFetch()
+//                } catch {
+//                    let fetchError = error as NSError
+//                    print("Unable to Perform Fetch Request")
+//                    print("\(fetchError), \(fetchError.localizedDescription)")
+//                }
+//            }
+//        }
         CoreDataManager.shared.fetchedResultsController.delegate = self
         do {
             try CoreDataManager.shared.fetchedResultsController.performFetch()
@@ -71,7 +71,13 @@ class SearchViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return (filteredArray == nil) ? 0 : filteredArray!.count
+        if let sections = CoreDataManager.shared.fetchedResultsController.sections {
+            EntityObjects = sections[section].objects as? [EntityBaseModel]
+            self.filterContentForSearchText(searchText: searchController.searchBar.text!, scope: (searchController.searchBar.scopeButtonTitles?[searchController.searchBar.selectedScopeButtonIndex])!)
+             return (filteredArray == nil) ? 0 : filteredArray!.count
+        }
+        
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,9 +105,14 @@ class SearchViewController: UITableViewController {
     }
 
     func refreshControlHandler(_ sender: UIRefreshControl) {
-        filteredArray?.append((filteredArray?[0])!)
-        self.refreshControl?.endRefreshing()
-        self.tableView.reloadData()
+//        filteredArray?.append((filteredArray?[0])!)
+//        self.refreshControl?.endRefreshing()
+//        self.tableView.reloadData()
+        NetworkOperations.sharedInstance.getAllData(dataType: AppConstant.allData, completionHandler:{ [unowned self] (response , success) -> Void in
+                self.refreshControl?.endRefreshing()
+            
+        })
+        
     }
 }
 
@@ -116,6 +127,7 @@ extension SearchViewController : UISearchResultsUpdating{
             let searchBar = searchController.searchBar
             let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
             filterContentForSearchText(searchText: searchController.searchBar.text!, scope: scope)
+            tableView.reloadData()
     }
 }
 
@@ -123,10 +135,12 @@ extension SearchViewController : UISearchResultsUpdating{
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchText: searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
+        tableView.reloadData()
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
           filterContentForSearchText(searchText: searchText, scope: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
+            tableView.reloadData()
     }
 }
 
@@ -146,7 +160,9 @@ extension SearchViewController{
                 }
                 return item.name!.lowercased().contains(searchText.lowercased()) && ((scope == "All") ? true : item.entityTypeModel!.lowercased() == scope.lowercased())
             }
-            tableView.reloadData()
+            filteredArray?.sort(by: {
+                return $0.name! < $1.name!
+            })
         }
     }
 }

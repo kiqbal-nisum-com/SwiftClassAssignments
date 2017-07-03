@@ -98,12 +98,7 @@ class ViewController: UIViewController,ViewControllerProtocol {
         self.showAlertController(entityType: (self.binLocModel?.modelType)!,sender:sender )
     
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! SearchViewController
-        self.binLocModel?.getAllEntityBaseModel()
-        vc.EntityObjects = self.binLocModel!.entityBaseModel
-    }
-
+    
     @IBAction func searchBtnClick(sender : UIButton){
         self.performSegue(withIdentifier:AppConstant.searchViewControllerSegueIdentifier , sender: self)
     }

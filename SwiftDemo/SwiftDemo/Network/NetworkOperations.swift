@@ -37,29 +37,26 @@ class NetworkOperations: NSObject {
     
         let context = CoreDataManager.shared.backgroundContext
         for loc  in dict["location"] as! NSArray{
-            if self.manageObjectExist(dict: loc as! [String : Any], entityName: CoreDataModelName.LocationModel.rawValue){
-                return
+            if !self.manageObjectExist(dict: loc as! [String : Any], entityName: CoreDataModelName.LocationModel.rawValue){
+                let locModel : LocationModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context)!
+                locModel.setObjectProperties(jsonDict: loc as! [String : Any], entityType: EntityType.Location.rawValue, context: context)
             }
-            let locModel : LocationModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context)!
-            locModel.setObjectProperties(jsonDict: loc as! [String : Any], entityType: EntityType.Location.rawValue, context: context)
+         
         }
         CoreDataManager.shared.saveBackgroundContext()
         for bin  in dict["bin"] as! NSArray{
-            if self.manageObjectExist(dict: bin as! [String : Any], entityName: CoreDataModelName.BinModel.rawValue){
-                return
+            if !self.manageObjectExist(dict: bin as! [String : Any], entityName: CoreDataModelName.BinModel.rawValue){
+                let binModel : BinModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context: context)!
+                binModel.setObjectProperties(jsonDict: bin as! [String : Any], entityType: EntityType.Bin.rawValue, context: context)
             }
-            let binModel : BinModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context: context)!
-            binModel.setObjectProperties(jsonDict: bin as! [String : Any], entityType: EntityType.Bin.rawValue, context: context)
         }
         CoreDataManager.shared.saveBackgroundContext()
 
         for item in dict["item"] as! NSArray{
-            if self.manageObjectExist(dict: item as! [String : Any], entityName: CoreDataModelName.ItemModel.rawValue){
-                return
+            if !self.manageObjectExist(dict: item as! [String : Any], entityName: CoreDataModelName.ItemModel.rawValue){
+                let itemModel : ItemModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context)!
+                itemModel.setObjectProperties(jsonDict: item as! [String : Any], entityType: EntityType.Item.rawValue, context: context)
             }
-
-            let itemModel : ItemModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context)!
-            itemModel.setObjectProperties(jsonDict: item as! [String : Any], entityType: EntityType.Item.rawValue, context: context)
         }
         CoreDataManager.shared.saveBackgroundContext()
     }
