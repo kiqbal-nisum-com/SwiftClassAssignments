@@ -74,13 +74,11 @@ class ViewController: UIViewController,ViewControllerProtocol {
             return
         }
         
-        let bin : BinModel = self.getCoreDataManagerObject().fetechRequest(entityName: CoreDataModelName.BinModel.rawValue, predicate: NSPredicate(format: "name = %@", self.binText.text!),context: context)![0] as! BinModel
-        let itemModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context) as! ItemModel
+        let itemModel : ItemModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context)!
         itemModel.setObjectProperties(jsonDict:  [
             "name":self.itemText.text!,
             "bin":selectedBin!.id,
             "qty" : Int16(self.qtyText.text!)!
-            
             ], entityType: EntityType.Item.rawValue, context: context)
         getCoreDataManagerObject().saveViewContext()
     }
@@ -129,7 +127,7 @@ extension ViewController : UIPickerViewDelegate , UIPickerViewDataSource{
         if let item = pickerData![row] as? LocationModel{
             selectedLoc = item
         } else{
-            selectedBin = pickerData![row] as! BinModel
+            selectedBin = pickerData![row] as? BinModel
         }
         self.setTitle(name: (self.pickerData![row].name)!)
         self.pickerView.isHidden = true
@@ -199,9 +197,8 @@ extension ViewController{
                         self.showErrorAlert(title: "Empty Location", message: "Please Select Location first")
                         return
                     }
-                    let binModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context:context ) as! BinModel
+                    let binModel : BinModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context:context)!
                  
-                    
                     binModel.setObjectProperties(jsonDict:    [   "name" : alertController.textFields!.first!.text!,
                                                                   "id" : binModel.getObjectId(entityName: EntityType.Bin.rawValue, context: context),
                                                                   "locationId" : self.selectedLoc!.id
@@ -212,7 +209,7 @@ extension ViewController{
                     self.setTitle(name: (alertController.textFields?.first?.text)!)
                     
                 } else{
-                    let locModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context) as! LocationModel
+                    let locModel : LocationModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context)!
                     locModel.setObjectProperties(jsonDict:    [   "name" : alertController.textFields!.first!.text!,
                                                                   "id" : locModel.getObjectId(entityName: EntityType.Location.rawValue, context: context),
                         ], entityType: EntityType.Bin.rawValue, context: context)

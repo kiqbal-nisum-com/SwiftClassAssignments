@@ -17,10 +17,19 @@ class SearchViewController: UITableViewController {
     var selectedItem : ItemModel?
     let searchController = UISearchController(searchResultsController: nil)
     let scoopButtonTitles = ["All",CoreDataModelName.ItemModel.rawValue,CoreDataModelName.BinModel.rawValue,CoreDataModelName.LocationModel.rawValue]
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        CoreDataManager.shared.fetchedResultsController.delegate = self
+        
+        do {
+            try CoreDataManager.shared.fetchedResultsController.performFetch()
+        } catch{
+            let fetchError = error as NSError
+            print("\(fetchError), \(fetchError.userInfo)")
+        }
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing")
         self.tableView.refreshControl = refreshControl
@@ -53,17 +62,17 @@ class SearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstant.searchViewControllerCellIdentifier)
         
-        switch (CoreDataModelName(rawValue :filteredArray![indexPath.row].entityTypeModel!))!{
+        switch (EntityType(rawValue :filteredArray![indexPath.row].entityTypeModel!))!{
         
-        case .ItemModel :
+        case .Item:
             cell?.textLabel?.text = "Item name : \((filteredArray![indexPath.row]).name ?? "")"
             cell?.detailTextLabel?.text = "Bin Name = \((filteredArray![indexPath.row] as! ItemModel).iItemToBin?.name ?? "") Location Name = \((filteredArray![indexPath.row] as! ItemModel).iItemToBin?.binToLocation?.name ?? "")"
             
-        case .BinModel :
+        case .Bin :
             cell?.textLabel?.text = "Bin name : \((filteredArray![indexPath.row] ).name ?? "")"
             cell?.detailTextLabel?.text = "Location name = \((filteredArray![indexPath.row] as! BinModel).binToLocation?.name ?? "") "
             
-        case .LocationModel:
+        case .Location :
             cell?.textLabel?.text = "Location name : \((filteredArray![indexPath.row]).name ?? "")"
             cell?.detailTextLabel?.text = ""
             
@@ -139,12 +148,41 @@ extension SearchViewController{
 //Mark: - NSFetechResult Controller Delegate
 extension SearchViewController: NSFetchedResultsControllerDelegate{
 
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
+        tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
+        switch (type) {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .update:
+            if let indexPath = indexPath {
+                _ = tableView.cellForRow(at: indexPath)
+            }
+            break;
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+            break;
+        }
     }
     
     
