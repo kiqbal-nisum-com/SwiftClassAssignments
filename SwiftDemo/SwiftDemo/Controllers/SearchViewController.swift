@@ -18,43 +18,30 @@ class SearchViewController: UITableViewController {
   
     let searchController = UISearchController(searchResultsController: nil)
     let scoopButtonTitles = ["All",CoreDataModelName.ItemModel.rawValue,CoreDataModelName.BinModel.rawValue,CoreDataModelName.LocationModel.rawValue]
-    fileprivate lazy var fetechResultsController : NSFetchedResultsController<EntityBaseModel> = {
-        // Create Fetch Request
-        let fetchRequest: NSFetchRequest<EntityBaseModel> = EntityBaseModel.fetchRequest()
-        
-        // Configure Fetch Request
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "entityTypeModel", ascending: true)]
-        
-        // Create Fetched Results Controller
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataManager.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        
-        // Configure Fetched Results Controller
-        fetchedResultsController.delegate = self
-        
-        return fetchedResultsController
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetechResultsController.delegate = self
         CoreDataManager.shared.persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
             if let error = error {
                 print("Unable to Load Persistent Store")
                 print("\(error), \(error.localizedDescription)")
-                
             } else {
-                
                 do {
-                    try self.fetechResultsController.performFetch()
+                    try CoreDataManager.shared.fetchedResultsController.performFetch()
                 } catch {
                     let fetchError = error as NSError
                     print("Unable to Perform Fetch Request")
                     print("\(fetchError), \(fetchError.localizedDescription)")
                 }
-
             }
         }
-        
+        CoreDataManager.shared.fetchedResultsController.delegate = self
+        do {
+            try CoreDataManager.shared.fetchedResultsController.performFetch()
+        } catch{
+            let fetchError = error as NSError
+            print("\(fetchError), \(fetchError.userInfo)")
+        }
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing")
         self.tableView.refreshControl = refreshControl
@@ -65,7 +52,6 @@ class SearchViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,8 +63,9 @@ class SearchViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60;
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = fetechResultsController.sections else { return 0 }
+        guard let sections = CoreDataManager.shared.fetchedResultsController.sections else { return 0 }
         return sections.count
     }
 
@@ -88,42 +75,34 @@ class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstant.searchViewControllerCellIdentifier)
-        
-        switch (CoreDataModelName(rawValue :filteredArray![indexPath.row].entityTypeModel!))!{
-        
-        case .ItemModel :
+        switch (EntityType(rawValue :filteredArray![indexPath.row].entityTypeModel!))!{
+        case .Item:
             cell?.textLabel?.text = "Item name : \((filteredArray![indexPath.row]).name ?? "")"
             cell?.detailTextLabel?.text = "Bin Name = \((filteredArray![indexPath.row] as! ItemModel).iItemToBin?.name ?? "") Location Name = \((filteredArray![indexPath.row] as! ItemModel).iItemToBin?.binToLocation?.name ?? "")"
-            
-        case .BinModel :
+        case .Bin :
             cell?.textLabel?.text = "Bin name : \((filteredArray![indexPath.row] ).name ?? "")"
             cell?.detailTextLabel?.text = "Location name = \((filteredArray![indexPath.row] as! BinModel).binToLocation?.name ?? "") "
-            
-        case .LocationModel:
+        case .Location :
             cell?.textLabel?.text = "Location name : \((filteredArray![indexPath.row]).name ?? "")"
             cell?.detailTextLabel?.text = ""
-            
-        default : break
         }
-        
         return cell!
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         selectedItem = filteredArray![indexPath.row] as? ItemModel
         if (selectedItem != nil) {
             self.performSegue(withIdentifier: AppConstant.backToBinControllerSegueIdentifier, sender: self)
         }
     }
-     func refreshControlHandler(_ sender: UIRefreshControl) {
+
+    func refreshControlHandler(_ sender: UIRefreshControl) {
         filteredArray?.append((filteredArray?[0])!)
         self.refreshControl?.endRefreshing()
         self.tableView.reloadData()
-        
     }
-
 }
 
 //MARK: - IBACTIONS
@@ -167,7 +146,6 @@ extension SearchViewController{
                 }
                 return item.name!.lowercased().contains(searchText.lowercased()) && ((scope == "All") ? true : item.entityTypeModel!.lowercased() == scope.lowercased())
             }
-            
             tableView.reloadData()
         }
     }
@@ -176,25 +154,50 @@ extension SearchViewController{
 //Mark: - NSFetechResult Controller Delegate
 extension SearchViewController: NSFetchedResultsControllerDelegate{
 
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        
-            
+
+        tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
+        switch (type) {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .update:
+            if let indexPath = indexPath {
+                _ = tableView.cellForRow(at: indexPath)
+            }
+            break;
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+            break;
         }
+    }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
         print (sectionName)
         return sectionName
     }
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        
-        
+    
     }
-    
-    
 
 }
 

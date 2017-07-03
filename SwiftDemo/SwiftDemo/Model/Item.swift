@@ -11,7 +11,7 @@
 class Item: EntityProtocol {
     
     var name: String?
-    var entityType: EntityType {return .ItemType}
+    var entityType: EntityType {return .Item}
     var bin : Bin?
     var qty : Int = 0
     

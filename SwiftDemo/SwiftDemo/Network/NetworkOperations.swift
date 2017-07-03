@@ -19,15 +19,18 @@ class NetworkOperations: NSObject {
         let urlSession = URLSession.shared
         let taskSession = urlSession.dataTask(with: urlRequest, completionHandler : {[unowned self] (data, response, error) -> Void in
             
-            let jsonRespone = try? JSONSerialization.jsonObject(with: data!, options: [])
-            
-            self.insertDataToCoreData(dict: jsonRespone as! [String : Any])
-            completionHandler(jsonRespone as? [String : Any], true)
-            
+
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            if statusCode == 200{
+                let jsonRespone = try? JSONSerialization.jsonObject(with: data!, options: [])
+                self.insertDataToCoreData(dict: jsonRespone as! [String : Any])
+                completionHandler(jsonRespone as? [String : Any], true)
+            } else {
+                completionHandler(nil, false)
+            }
+
         })
-        
         taskSession.resume()
-     
     }
     
     func insertDataToCoreData(dict : [String : Any]){
@@ -37,16 +40,16 @@ class NetworkOperations: NSObject {
             if self.manageObjectExist(dict: loc as! [String : Any], entityName: CoreDataModelName.LocationModel.rawValue){
                 return
             }
-            let locModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context) as! LocationModel
-            locModel.setLocation(locDict: loc as! [String : Any], context: context)
+            let locModel : LocationModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context)!
+            locModel.setObjectProperties(jsonDict: loc as! [String : Any], entityType: EntityType.Location.rawValue, context: context)
         }
         CoreDataManager.shared.saveBackgroundContext()
         for bin  in dict["bin"] as! NSArray{
             if self.manageObjectExist(dict: bin as! [String : Any], entityName: CoreDataModelName.BinModel.rawValue){
                 return
             }
-           let binModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context: context) as! BinModel
-            binModel.setBin(binDict: bin as! [String : Any],context: context)
+            let binModel : BinModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context: context)!
+            binModel.setObjectProperties(jsonDict: bin as! [String : Any], entityType: EntityType.Bin.rawValue, context: context)
         }
         CoreDataManager.shared.saveBackgroundContext()
 
@@ -54,16 +57,17 @@ class NetworkOperations: NSObject {
             if self.manageObjectExist(dict: item as! [String : Any], entityName: CoreDataModelName.ItemModel.rawValue){
                 return
             }
-            let itemModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context) as! ItemModel
-            itemModel.setItem(itemDic: item as! [String : Any],context: context)
-        
+
+            let itemModel : ItemModel = self.coreDataManager.newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context)!
+            itemModel.setObjectProperties(jsonDict: item as! [String : Any], entityType: EntityType.Item.rawValue, context: context)
         }
         CoreDataManager.shared.saveBackgroundContext()
     }
 
     func manageObjectExist(dict : [String : Any], entityName : String) -> Bool{
     
-        if let _ =   self.coreDataManager.fetechRequest(entityName: entityName, predicate: NSPredicate(format: "id = %d", dict["id"]as! Int16), context: self.coreDataManager.viewContext) {
+
+        if let _ : EntityBaseModel =   self.coreDataManager.fetechRequestElement(entityName: entityName, predicate: NSPredicate(format: "id = %d", dict["id"] as! Int16), context: self.coreDataManager.viewContext) {
             return true
         }
         return false

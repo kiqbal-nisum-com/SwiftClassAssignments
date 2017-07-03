@@ -36,6 +36,21 @@ public final class CoreDataManager {
     
     //MARK: - all OS stack
     
+    public lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        // Initialize Fetch Request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataModelName.EntityBaseModel.rawValue)
+        
+        // Add Sort Descriptors
+        let sortDescriptor = NSSortDescriptor(key: "entityTypeModel", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        // Initialize Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Configure Fetched Results Controller
+        
+        return fetchedResultsController
+    }()
     public lazy var viewContext: NSManagedObjectContext = {
         if #available(iOS 10.0, OSX 10.12, *) {
             return self.persistentContainer.viewContext
@@ -257,9 +272,9 @@ public final class CoreDataManager {
         return appSupportURL.appendingPathComponent(CoreDataManager.persistentCoordinatorPath)
     }()
     
-    func fetechRequest(entityName: String! , predicate :NSPredicate?,context : NSManagedObjectContext)-> [NSManagedObject]?{
+    func fetechRequestElements<T>(entityName: String! , predicate :NSPredicate?,context : NSManagedObjectContext)-> T?{
         
-            
+        print (predicate ?? "")
             let fetechRequest:NSFetchRequest<NSManagedObject> = NSFetchRequest<NSManagedObject>(entityName: entityName)
             if let _ = predicate{
                 fetechRequest.predicate = predicate
@@ -269,15 +284,21 @@ public final class CoreDataManager {
                 if results.count == 0 {
                     return nil
                 }
-                return results
+                return results as? T
             }
             catch
             {
                 print("Error with request: \(error)")
                 return nil
             }
-            
         }
+    func fetechRequestElement<T>(entityName: String! , predicate :NSPredicate?,context : NSManagedObjectContext)-> T?{
+        
+        if let results:[EntityBaseModel]? = fetechRequestElements(entityName: entityName, predicate: predicate, context: context) {
+            return results?.first as? T
+        }
+        return nil
+    }
     
     func saveManageObject( managedObject : NSManagedObject!,context: NSManagedObjectContext){
         
@@ -298,13 +319,11 @@ public final class CoreDataManager {
         return nil
     }
     
-    func newManagedObject (entityName:String, context: NSManagedObjectContext) -> NSManagedObject?{
+    func  newManagedObject<T> (entityName:String, context: NSManagedObjectContext) -> T?{
         
             let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context)
             let managedObj =  NSManagedObject(entity: entityDescription!, insertInto: context)
-            return managedObj;
-        
+            return managedObj as? T;
     }
-
-    
 }
+

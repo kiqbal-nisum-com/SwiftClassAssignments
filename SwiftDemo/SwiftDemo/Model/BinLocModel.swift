@@ -15,7 +15,7 @@ class BinLocModel: NSObject {
     var names : [String]! = [String]()
     var bins : [String]! = [String]()
     var locations : [String]! = [String]()
-    var modelType : EntityType = .BinType
+    var modelType : EntityType = .Bin
     
     var entityBaseModel : [EntityBaseModel]?
     
@@ -24,14 +24,14 @@ class BinLocModel: NSObject {
         
         switch (modelType){
         
-        case EntityType.BinType : self.bins.append(name!)
-        case EntityType.LocationType : self.locations.append(name!)
+        case EntityType.Bin : self.bins.append(name!)
+        case EntityType.Location : self.locations.append(name!)
         default : break
         }
     }
     
     func setName (){
-        names = (modelType == .BinType) ? bins : locations
+        names = (modelType == .Bin) ? bins : locations
     }
     func getIndexOfValue(val : String!)-> Int{
     
@@ -42,12 +42,12 @@ class BinLocModel: NSObject {
     
     func loadMockData(){
         
-        self.modelType = .BinType
+        self.modelType = .Bin
         self.addElement(name: "bin 1")
         self.addElement(name: "bin 2")
         self.addElement(name: "bin 3")
         
-        self.modelType = .LocationType
+        self.modelType = .Location
         self.addElement(name: "loc 1")
         self.addElement(name: "loc 2")
         self.addElement(name: "loc 3")
@@ -71,6 +71,6 @@ class BinLocModel: NSObject {
     
     func getAllEntityBaseModel(){
     
-        self.entityBaseModel =  CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.EntityBaseModel.rawValue, predicate: nil, context: CoreDataManager.shared.viewContext) as? [EntityBaseModel]
+        self.entityBaseModel  =  CoreDataManager.shared.fetechRequestElements(entityName: CoreDataModelName.EntityBaseModel.rawValue, predicate: nil, context: CoreDataManager.shared.viewContext)
     }
 }
