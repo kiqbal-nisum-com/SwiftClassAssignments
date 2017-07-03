@@ -15,7 +15,7 @@ class SearchViewController: UITableViewController {
     var EntityObjects : [EntityBaseModel]? = [EntityBaseModel]()
     var filteredArray : [EntityBaseModel]? = [EntityBaseModel]()
     var selectedItem : ItemModel?
-  
+    var difference : Int = 0
     let searchController = UISearchController(searchResultsController: nil)
     let scoopButtonTitles = ["All",EntityType.Item.rawValue,EntityType.Bin.rawValue,EntityType.Location.rawValue]
 
@@ -74,7 +74,7 @@ class SearchViewController: UITableViewController {
         if let sections = CoreDataManager.shared.fetchedResultsController.sections {
             EntityObjects = sections[section].objects as? [EntityBaseModel]
             self.filterContentForSearchText(searchText: searchController.searchBar.text!, scope: (searchController.searchBar.scopeButtonTitles?[searchController.searchBar.selectedScopeButtonIndex])!)
-             return (filteredArray == nil) ? 0 : filteredArray!.count
+             return ((filteredArray == nil) ? 0 : filteredArray!.count )
         }
         
         return 0
@@ -179,29 +179,39 @@ extension SearchViewController: NSFetchedResultsControllerDelegate{
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        difference = (CoreDataManager.shared.fetchedResultsController.sections?[(newIndexPath?.section)!].objects?.count)! - (filteredArray?.count)!
         switch (type) {
         case .insert:
             if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .fade)
+//                tableView.insertRows(at: [indexPath], with: .fade)
+                tableView.reloadData()
             }
             break;
         case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .fade)
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.reloadData()
+
             }
             break;
         case .update:
             if let indexPath = indexPath {
-                _ = tableView.cellForRow(at: indexPath)
+//                _ = tableView.cellForRow(at: indexPath)
+                tableView.reloadData()
+
             }
             break;
         case .move:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .fade)
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.reloadData()
+
             }
             
             if let newIndexPath = newIndexPath {
-                tableView.insertRows(at: [newIndexPath], with: .fade)
+//                tableView.insertRows(at: [newIndexPath], with: .fade)
+                tableView.reloadData()
+
             }
             break;
         }

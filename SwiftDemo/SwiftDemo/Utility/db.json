@@ -4,6 +4,7 @@
              { "id": 2, "name": "item2","quantity":1, "binId": 2 },
              { "id": 3, "name": "item3","quantity":1, "binId": 1 }
              
+             
         
             ],
     "bin":  [
