@@ -1,0 +1,15 @@
+{
+    "item": [
+              { "id": 1, "name": "item1", "qty":1,"binId": 1 },
+              { "id": 2, "name": "item2","qty":1, "binId": 2 },
+              { "id": 3, "name": "item3","qty":1, "binId": 1 }
+            ],
+    "bin":  [
+                { "id": 1, "name": "bin1", "locationId": 1 },
+                { "id": 2, "name": "bin2", "locationId": 1 },
+                { "id": 3, "name": "bin3", "locationId": 2 }
+            ],
+    "location": [ { "id":1,"name": "loc1" },
+                  { "id":2,"name": "loc2" }
+                ]
+}

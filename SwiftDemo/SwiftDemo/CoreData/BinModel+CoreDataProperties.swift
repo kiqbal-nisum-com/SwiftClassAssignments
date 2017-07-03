@@ -19,15 +19,11 @@ extension BinModel {
     @NSManaged public var binToLocation: LocationModel?
     @NSManaged public var binToItem: NSSet?
     
-    func setBin (binDict : [String : Any]){
+    func setBin (binDict : [String : Any],context:NSManagedObjectContext){
         self.name = binDict["name"] as! String
-        self.binToLocation = binDict["location"] as? LocationModel
-        if let  count  = (CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.ItemModel.rawValue, predicate: nil)?.count)  {
-            self.id = Int16(count + 1)
-        } else{
-            self.id = 1
-        }
         self.entityTypeModel = CoreDataModelName.BinModel.rawValue
+        self.id  = binDict["id"] as! Int16
+        self.binToLocation = CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.LocationModel.rawValue, predicate: NSPredicate(format: "id == %d", binDict["locationId"] as! Int16),context: context)?.first as? LocationModel
         
     
     }

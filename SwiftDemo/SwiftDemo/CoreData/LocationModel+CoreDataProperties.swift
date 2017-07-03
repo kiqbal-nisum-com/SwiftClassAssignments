@@ -19,19 +19,10 @@ extension LocationModel {
     @NSManaged public var locationToBin: NSSet?
     
     
-    func setLocation (locDict : [String : Any]){
+    func setLocation (locDict : [String : Any],context:NSManagedObjectContext){
         self.name = locDict["name"] as! String
-        
-        if let  count  = (CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.ItemModel.rawValue, predicate: nil)?.count)  {
-            self.id = Int16(count + 1)
-        } else{
-            self.id = 1
-        }
-        
-        
+        self.id  = locDict["id"] as! Int16
         self.entityTypeModel = CoreDataModelName.LocationModel.rawValue
-        
-        
     }
 
 }

@@ -224,5 +224,117 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftDemo/Network/NetworkOperations.swift"
+            timestampString = "519926721.272282"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "insertDataToCoreData(dict:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftDemo/CoreData/CoreDataManager.swift"
+            timestampString = "519926487.43455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "bgContextChanged(notification:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftDemo.CoreDataManager.bgContextChanged (notification : __ObjC.NSNotification) -&gt; ()"
+                  moduleName = "SwiftDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abdulsamad/Documents/Projects/SwiftDemoProject/SwiftClassAssignments/SwiftDemo/SwiftDemo/CoreData/CoreDataManager.swift"
+                  timestampString = "519926765.727858"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "238"
+                  endingLineNumber = "238"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftDemo.CoreDataManager.(bgContextChanged (notification : __ObjC.NSNotification) -&gt; ()).(closure #1)"
+                  moduleName = "SwiftDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abdulsamad/Documents/Projects/SwiftDemoProject/SwiftClassAssignments/SwiftDemo/SwiftDemo/CoreData/CoreDataManager.swift"
+                  timestampString = "519926765.730729"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239"
+                  offsetFromSymbolStart = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftDemo/CoreData/CoreDataManager.swift"
+            timestampString = "519926599.728395"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "mainContextChanged(notification:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftDemo.CoreDataManager.mainContextChanged (notification : __ObjC.NSNotification) -&gt; ()"
+                  moduleName = "SwiftDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abdulsamad/Documents/Projects/SwiftDemoProject/SwiftClassAssignments/SwiftDemo/SwiftDemo/CoreData/CoreDataManager.swift"
+                  timestampString = "519926765.743578"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "231"
+                  endingLineNumber = "231"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftDemo.CoreDataManager.(mainContextChanged (notification : __ObjC.NSNotification) -&gt; ()).(closure #1)"
+                  moduleName = "SwiftDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/abdulsamad/Documents/Projects/SwiftDemoProject/SwiftClassAssignments/SwiftDemo/SwiftDemo/CoreData/CoreDataManager.swift"
+                  timestampString = "519926765.746256"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "232"
+                  endingLineNumber = "232"
+                  offsetFromSymbolStart = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

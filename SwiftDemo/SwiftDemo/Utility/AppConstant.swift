@@ -15,8 +15,13 @@ class AppConstant: NSObject {
     static let NewValueSegueIdentifier = "NewValueSegue"
     static let searchViewControllerSegueIdentifier = "SearchViewControllerSegue"
     
-    
     //MARK: - Cell Identifiers
-    
     static let searchViewControllerCellIdentifier = "SearchItemCell"
+    
+    //MARK: - Web Services URL
+    static let baseURL = "http://localhost:3000/"
+    static let allData = "db"
+    static let binUrl = "bin"
+    static let itemUrl = "Item"
+    static let location = "location"
 }

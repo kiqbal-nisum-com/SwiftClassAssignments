@@ -19,18 +19,13 @@ extension ItemModel {
     @NSManaged public var qty: Int16
     @NSManaged public var iItemToBin: BinModel!
     
-    func setItem(itemDic : [String : Any]){
+    func setItem(itemDic : [String : Any],context:NSManagedObjectContext){
     
-        self.qty = itemDic["quantity"] as! Int16
-        self.iItemToBin = itemDic["bin"] as! BinModel
+        self.qty = itemDic["qty"] as! Int16
         self.name = itemDic["name"] as! String
         self.entityTypeModel = CoreDataModelName.ItemModel.rawValue
-        if let  count  = (CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.ItemModel.rawValue, predicate: nil)?.count)  {
-            self.id = Int16(count + 1)
-        } else{
-            self.id = 1
-        }
-        
+        self.id  = itemDic["id"] as! Int16
+        self.iItemToBin = CoreDataManager.shared.fetechRequest(entityName: CoreDataModelName.BinModel.rawValue, predicate: NSPredicate(format: "id == %d", itemDic["binId"] as! Int16),context: context)?.first as! BinModel
     }
 
 }

@@ -7,18 +7,58 @@
 //
 
 import UIKit
-
+import CoreData
 class SearchViewController: UITableViewController {
     
+    
+    @IBOutlet weak var refreshControlHandler: UIRefreshControl!
     var EntityObjects : [EntityBaseModel]? = [EntityBaseModel]()
     var filteredArray : [EntityBaseModel]? = [EntityBaseModel]()
     var selectedItem : ItemModel?
+  
     let searchController = UISearchController(searchResultsController: nil)
     let scoopButtonTitles = ["All",CoreDataModelName.ItemModel.rawValue,CoreDataModelName.BinModel.rawValue,CoreDataModelName.LocationModel.rawValue]
+    fileprivate lazy var fetechResultsController : NSFetchedResultsController<EntityBaseModel> = {
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<EntityBaseModel> = EntityBaseModel.fetchRequest()
+        
+        // Configure Fetch Request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "entityTypeModel", ascending: true)]
+        
+        // Create Fetched Results Controller
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataManager.shared.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        // Configure Fetched Results Controller
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.fetechResultsController.delegate = self
+        CoreDataManager.shared.persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
+            if let error = error {
+                print("Unable to Load Persistent Store")
+                print("\(error), \(error.localizedDescription)")
+                
+            } else {
+                
+                do {
+                    try self.fetechResultsController.performFetch()
+                } catch {
+                    let fetchError = error as NSError
+                    print("Unable to Perform Fetch Request")
+                    print("\(fetchError), \(fetchError.localizedDescription)")
+                }
+
+            }
+        }
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing")
+        self.tableView.refreshControl = refreshControl
+        self.refreshControl?.addTarget(self, action:#selector(SearchViewController.refreshControlHandler(_:)) , for: .valueChanged)
         searchController.searchBar.scopeButtonTitles = scoopButtonTitles
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
@@ -38,17 +78,19 @@ class SearchViewController: UITableViewController {
         return 60;
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        guard let sections = fetechResultsController.sections else { return 0 }
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return (filteredArray == nil) ? 0 : filteredArray!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstant.searchViewControllerCellIdentifier)
         
-        switch (CoreDataModelName(rawValue :filteredArray![indexPath.row].entityTypeModel))!{
+        switch (CoreDataModelName(rawValue :filteredArray![indexPath.row].entityTypeModel!))!{
         
         case .ItemModel :
             cell?.textLabel?.text = "Item name : \((filteredArray![indexPath.row]).name ?? "")"
@@ -75,6 +117,18 @@ class SearchViewController: UITableViewController {
             self.performSegue(withIdentifier: AppConstant.backToBinControllerSegueIdentifier, sender: self)
         }
     }
+     func refreshControlHandler(_ sender: UIRefreshControl) {
+        filteredArray?.append((filteredArray?[0])!)
+        self.refreshControl?.endRefreshing()
+        self.tableView.reloadData()
+        
+    }
+
+}
+
+//MARK: - IBACTIONS
+extension SearchViewController{
+
 
 }
 //MARK: - SearchResult Update delegate
@@ -117,6 +171,31 @@ extension SearchViewController{
             tableView.reloadData()
         }
     }
+}
+
+//Mark: - NSFetechResult Controller Delegate
+extension SearchViewController: NSFetchedResultsControllerDelegate{
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+            
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, sectionIndexTitleForSectionName sectionName: String) -> String? {
+        print (sectionName)
+        return sectionName
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        
+    }
+    
+    
+
 }
 
 
