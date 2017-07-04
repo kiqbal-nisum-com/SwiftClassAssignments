@@ -2,8 +2,9 @@
     "item": [
              { "id": 1, "name": "item1", "quantity":1,"binId": 1 },
              { "id": 2, "name": "item2","quantity":1, "binId": 2 },
-             { "id": 3, "name": "item3","quantity":1, "binId": 2 }
-
+             { "id": 3, "name": "item3","quantity":1, "binId": 2 },
+             { "id": 4, "name": "item3","quantity":1, "binId": 2 },
+             { "id": 5, "name": "item3","quantity":1, "binId": 2 }
              
             ],
     "bin":  [

@@ -13,16 +13,15 @@ class SearchViewController: UITableViewController {
     
     @IBOutlet weak var refreshControlHandler: UIRefreshControl!
    
-    var fetechResultController : NSFetchedResultsController<EntityBaseModel>!
+    var fetechResultController : NSFetchedResultsController<EntityBaseModel>?
     var selectedItem : ItemModel?
-    var difference : Int = 0
     let searchController = UISearchController(searchResultsController: nil)
     let scoopButtonTitles = ["All",EntityType.Item.rawValue,EntityType.Bin.rawValue,EntityType.Location.rawValue]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fetechResultController = CoreDataManager.shared.fetchedResultsController as! NSFetchedResultsController<EntityBaseModel>
-        self.fetechResultController.delegate = self
+        self.fetechResultController = CoreDataManager.shared.fetchedResultsController as? NSFetchedResultsController<EntityBaseModel>
+        self.fetechResultController!.delegate = self
         self.fetchResultControllerPerform()
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing")
@@ -35,6 +34,8 @@ class SearchViewController: UITableViewController {
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
     }
+    
+    
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -48,7 +49,7 @@ class SearchViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let sections = CoreDataManager.shared.fetchedResultsController.sections {
+        if let sections = self.fetechResultController!.sections {
               return (sections[section].objects?.count)!
         }
         return 0
@@ -58,7 +59,7 @@ class SearchViewController: UITableViewController {
       
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstant.searchViewControllerCellIdentifier)
         
-        let entityObject   = self.fetechResultController.object(at: indexPath)
+        let entityObject   = self.fetechResultController!.object(at: indexPath)
         
         switch (EntityType(rawValue :entityObject.entityTypeModel!))!{
         case .Item:
@@ -75,10 +76,15 @@ class SearchViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedItem = self.fetechResultController.object(at: indexPath) as? ItemModel
+        selectedItem = self.fetechResultController!.object(at: indexPath) as? ItemModel
         if (selectedItem != nil) {
             self.performSegue(withIdentifier: AppConstant.backToBinControllerSegueIdentifier, sender: self)
         }
+    }
+    
+    deinit {
+        self.fetechResultController?.fetchRequest.predicate = nil
+        self.fetechResultController = nil
     }
 
     func refreshControlHandler(_ sender: UIRefreshControl) {
@@ -113,9 +119,39 @@ extension SearchViewController : UISearchResultsUpdating{
                 predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex],searchBar.text!)
             }
         }
-        self.fetechResultController.fetchRequest.predicate =  predicate
+        self.fetechResultController!.fetchRequest.predicate =  predicate
         self.fetchResultControllerPerform()
         tableView.reloadData()
+    }
+}
+
+//MARK: - Class Functions
+extension SearchViewController{
+    func filterContentForSearchText(searchText: String, scope: String ) {
+        
+        //        if EntityObjects != nil{
+        //            filteredArray = ((scope == "All") ? EntityObjects : EntityObjects?.filter({return $0.entityTypeModel!.lowercased() == scope.lowercased()}))!
+        //
+        //            filteredArray = filteredArray!.filter { item in
+        //                if searchText.isEmpty{
+        //                    return true
+        //                }
+        //                if searchText.isEmpty && item.entityTypeModel!.lowercased() == scope.lowercased() || searchText.isEmpty &&   scope.lowercased() == "All" {
+        //                    return true
+        //                }
+        //                return item.name!.lowercased().contains(searchText.lowercased()) && ((scope == "All") ? true : item.entityTypeModel!.lowercased() == scope.lowercased())
+        //            }
+        //            filteredArray?.sort(by: {
+        //                return $0.name! < $1.name!
+        //            })
+        //        }
+    }
+    func fetchResultControllerPerform(){
+        do {
+            try self.fetechResultController!.performFetch()
+        } catch{
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
     }
 }
 
@@ -133,10 +169,9 @@ extension SearchViewController: UISearchBarDelegate {
                 predicate = NSPredicate(format: "entityTypeModel == %@", searchBar.scopeButtonTitles![selectedScope])
             } else {
              predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", searchBar.scopeButtonTitles![selectedScope],searchBar.text!)
-            
             }
         }
-        self.fetechResultController.fetchRequest.predicate = predicate
+        self.fetechResultController!.fetchRequest.predicate = predicate
         self.fetchResultControllerPerform()
         tableView.reloadData()
     }
@@ -153,42 +188,14 @@ extension SearchViewController: UISearchBarDelegate {
                 predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex],searchBar.text!)
             }
         }
-        self.fetechResultController.fetchRequest.predicate =  predicate
+        self.fetechResultController!.fetchRequest.predicate =  predicate
         self.fetchResultControllerPerform()
         tableView.reloadData()
         
     }
 }
 
-//MARK: - Class Functions
-extension SearchViewController{
-    func filterContentForSearchText(searchText: String, scope: String ) {
-        
-//        if EntityObjects != nil{
-//            filteredArray = ((scope == "All") ? EntityObjects : EntityObjects?.filter({return $0.entityTypeModel!.lowercased() == scope.lowercased()}))!
-//            
-//            filteredArray = filteredArray!.filter { item in
-//                if searchText.isEmpty{
-//                    return true
-//                }
-//                if searchText.isEmpty && item.entityTypeModel!.lowercased() == scope.lowercased() || searchText.isEmpty &&   scope.lowercased() == "All" {
-//                    return true
-//                }
-//                return item.name!.lowercased().contains(searchText.lowercased()) && ((scope == "All") ? true : item.entityTypeModel!.lowercased() == scope.lowercased())
-//            }
-//            filteredArray?.sort(by: {
-//                return $0.name! < $1.name!
-//            })
-//        }
-    }
-    func fetchResultControllerPerform(){
-        do {
-            try CoreDataManager.shared.fetchedResultsController.performFetch()
-        } catch{
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
-        }
-    }
-}
+
 
 //Mark: - NSFetechResult Controller Delegate
 extension SearchViewController: NSFetchedResultsControllerDelegate{
@@ -197,14 +204,11 @@ extension SearchViewController: NSFetchedResultsControllerDelegate{
         tableView.endUpdates()
     }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-
         tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-      
         switch (type) {
-
         case .insert: tableView.insertRows(at: [newIndexPath!], with: .fade)
         case .delete : tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update :   _ = tableView.cellForRow(at: indexPath!)
