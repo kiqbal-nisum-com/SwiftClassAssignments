@@ -3,13 +3,12 @@
              { "id": 1, "name": "item1", "quantity":1,"binId": 1 },
              { "id": 2, "name": "item2", "quantity":1,"binId": 1 },
              { "id": 3, "name": "item3", "quantity":1,"binId": 1 },
-             { "id": 4, "name": "item4", "quantity":1,"binId": 1 }
-             
+             { "id": 4, "name": "item4", "quantity":1,"binId": 1 },
+             { "id": 5, "name": "item5", "quantity":1,"binId": 1 }
             ],
     "bin":  [
                 { "id": 1, "name": "bin1", "locationId": 1 },
                 { "id": 2, "name": "bin2", "locationId": 1 }
-             
             ],
     "location": [ { "id":1,"name": "loc1" },
                   { "id":2,"name": "loc2" }

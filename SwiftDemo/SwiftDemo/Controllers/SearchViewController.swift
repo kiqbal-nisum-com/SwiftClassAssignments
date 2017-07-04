@@ -103,48 +103,29 @@ extension SearchViewController{
 
 
 }
-//MARK: - SearchResult Update delegate
-extension SearchViewController : UISearchResultsUpdating{
-    func updateSearchResults(for searchController: UISearchController) {
-        
-        let searchBar = searchController.searchBar
-        var predicate : NSPredicate?
-        if searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex] == "All" {
-            
-            predicate = ((searchBar.text!.isEmpty ) ? nil : NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!))
-        } else {
-            if searchBar.text!.isEmpty{
-                predicate = NSPredicate(format: "entityTypeModel == %@", searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
-            } else {
-                predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex],searchBar.text!)
-            }
-        }
-        self.fetechResultController!.fetchRequest.predicate =  predicate
-        self.fetchResultControllerPerform()
-        tableView.reloadData()
-    }
-}
+
 
 //MARK: - Class Functions
 extension SearchViewController{
     func filterContentForSearchText(searchText: String, scope: String ) {
         
-        //        if EntityObjects != nil{
-        //            filteredArray = ((scope == "All") ? EntityObjects : EntityObjects?.filter({return $0.entityTypeModel!.lowercased() == scope.lowercased()}))!
-        //
-        //            filteredArray = filteredArray!.filter { item in
-        //                if searchText.isEmpty{
-        //                    return true
-        //                }
-        //                if searchText.isEmpty && item.entityTypeModel!.lowercased() == scope.lowercased() || searchText.isEmpty &&   scope.lowercased() == "All" {
-        //                    return true
-        //                }
-        //                return item.name!.lowercased().contains(searchText.lowercased()) && ((scope == "All") ? true : item.entityTypeModel!.lowercased() == scope.lowercased())
-        //            }
-        //            filteredArray?.sort(by: {
-        //                return $0.name! < $1.name!
-        //            })
-        //        }
+        var predicate : NSPredicate?
+        if scope == "All" && !searchText.isEmpty{
+            
+            predicate = ((searchText.isEmpty ) ? nil : NSPredicate(format: "name CONTAINS[cd] %@", searchText))
+        } else if scope != "All" {
+            if searchText.isEmpty{
+                predicate = NSPredicate(format: "entityTypeModel == %@", scope)
+            } else {
+                predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", scope,searchText)
+            }
+        }
+        self.fetechResultController!.fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "entityTypeModel", ascending: true)
+        let idSortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+        self.fetechResultController!.fetchRequest.sortDescriptors  = [sortDescriptor,idSortDescriptor]
+        self.fetchResultControllerPerform()
+        tableView.reloadData()
     }
     func fetchResultControllerPerform(){
         do {
@@ -155,43 +136,23 @@ extension SearchViewController{
     }
 }
 
+//MARK: - SearchResult Update delegate
+extension SearchViewController : UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        self.filterContentForSearchText(searchText: searchBar.text!, scope: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
+    }
+}
+
 //MARK: - SearchBar Delegate
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        
-        var predicate : NSPredicate?
-        if searchBar.scopeButtonTitles![selectedScope] == "All" {
-        
-            predicate = ((searchBar.text!.isEmpty ) ? nil : NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!))
-        } else {
-            if searchBar.text!.isEmpty{
-                predicate = NSPredicate(format: "entityTypeModel == %@", searchBar.scopeButtonTitles![selectedScope])
-            } else {
-             predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", searchBar.scopeButtonTitles![selectedScope],searchBar.text!)
-            }
-        }
-        self.fetechResultController!.fetchRequest.predicate = predicate
-        self.fetchResultControllerPerform()
-        tableView.reloadData()
+        self.filterContentForSearchText(searchText: searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        var predicate : NSPredicate?
-        if searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex] == "All" {
-            
-            predicate = ((searchBar.text!.isEmpty ) ? nil : NSPredicate(format: "name CONTAINS[cd] %@", searchBar.text!))
-        } else {
-            if searchBar.text!.isEmpty{
-                predicate = NSPredicate(format: "entityTypeModel == %@", searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
-            } else {
-                predicate = NSPredicate(format: "entityTypeModel == %@ && name CONTAINS[cd] %@ ", searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex],searchBar.text!)
-            }
-        }
-        self.fetechResultController!.fetchRequest.predicate =  predicate
-        self.fetchResultControllerPerform()
-        tableView.reloadData()
-        
+       self.filterContentForSearchText(searchText: searchBar.text!, scope: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
     }
 }
 
