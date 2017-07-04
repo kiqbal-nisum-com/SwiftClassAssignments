@@ -55,8 +55,8 @@ class SearchViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        self.filteredArray = self.EntityObjects
-        self.tableView.reloadData()
+//        self.filteredArray = self.EntityObjects
+//        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -197,7 +197,7 @@ extension SearchViewController: NSFetchedResultsControllerDelegate{
         case .update:
             if let indexPath = indexPath {
 //                _ = tableView.cellForRow(at: indexPath)
-                tableView.reloadData()
+//                tableView.reloadData()
 
             }
             break;
