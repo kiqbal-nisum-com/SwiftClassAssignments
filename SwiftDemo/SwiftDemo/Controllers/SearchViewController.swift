@@ -212,7 +212,7 @@ extension SearchViewController: NSFetchedResultsControllerDelegate{
         case .insert: tableView.insertRows(at: [newIndexPath!], with: .fade)
         case .delete : tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update :   _ = tableView.cellForRow(at: indexPath!)
-        case .move :  tableView.deleteRows(at: [indexPath!], with: .fade) ;tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .move :  tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
     
