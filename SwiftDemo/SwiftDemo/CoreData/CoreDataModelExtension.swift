@@ -9,12 +9,12 @@
 import Foundation
 import CoreData
 
-extension EntityBaseModel{
+extension EntityBaseModel {
     func setObjectProperties(jsonDict : [String : Any]!,entityType : String,context : NSManagedObjectContext){
             self.name = jsonDict["name"] as? String
             self.id  = jsonDict["id"] as! Int16
             self.entityTypeModel =  entityType
-            setEntityObject(jsonDict: jsonDict, entityType: EntityType(rawValue: entityType)!, context: context)
+            self.setEntityObject(jsonDict: jsonDict, entityType: EntityType(rawValue: entityType)!, context: context)
         }
     
     func setEntityObject(jsonDict :  [String : Any]! ,entityType : EntityType,context : NSManagedObjectContext){
