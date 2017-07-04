@@ -86,32 +86,20 @@ class SearchViewController: UITableViewController {
         self.fetechResultController?.fetchRequest.predicate = nil
         self.fetechResultController = nil
     }
-
-    func refreshControlHandler(_ sender: UIRefreshControl) {
-//        filteredArray?.append((filteredArray?[0])!)
-//        self.refreshControl?.endRefreshing()
-//        self.tableView.reloadData()
-        NetworkOperations.sharedInstance.getAllData(dataType: AppConstant.allData, completionHandler:{ [unowned self] (response , success) -> Void in
-                self.refreshControl?.endRefreshing()
-        })
-        
-    }
 }
-
-//MARK: - IBACTIONS
-extension SearchViewController{
-
-
-}
-
 
 //MARK: - Class Functions
 extension SearchViewController{
+
+    func refreshControlHandler(_ sender: UIRefreshControl) {
+        NetworkOperations.sharedInstance.getAllData(dataType: AppConstant.allData, completionHandler:{ [unowned self] (response , success) -> Void in
+            self.refreshControl?.endRefreshing()
+        })
+    }
+    
     func filterContentForSearchText(searchText: String, scope: String ) {
-        
         var predicate : NSPredicate?
         if scope == "All" && !searchText.isEmpty{
-            
             predicate = ((searchText.isEmpty ) ? nil : NSPredicate(format: "name CONTAINS[cd] %@", searchText))
         } else if scope != "All" {
             if searchText.isEmpty{
@@ -127,6 +115,7 @@ extension SearchViewController{
         self.fetchResultControllerPerform()
         tableView.reloadData()
     }
+    
     func fetchResultControllerPerform(){
         do {
             try self.fetechResultController!.performFetch()
@@ -155,8 +144,6 @@ extension SearchViewController: UISearchBarDelegate {
        self.filterContentForSearchText(searchText: searchBar.text!, scope: searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex])
     }
 }
-
-
 
 //Mark: - NSFetechResult Controller Delegate
 extension SearchViewController: NSFetchedResultsControllerDelegate{
