@@ -18,17 +18,18 @@ class NetworkOperations: NSObject {
         let urlRequest = URLRequest(url: URL(string: AppConstant.baseURL + dataType)!)
         let urlSession = URLSession.shared
         let taskSession = urlSession.dataTask(with: urlRequest, completionHandler : {[unowned self] (data, response, error) -> Void in
-            
 
-            let statusCode = (response as! HTTPURLResponse).statusCode
-            if statusCode == 200{
-                let jsonRespone = try? JSONSerialization.jsonObject(with: data!, options: [])
-                self.insertDataToCoreData(dict: jsonRespone as! [String : Any])
-                completionHandler(jsonRespone as? [String : Any], true)
-            } else {
+            if let statusCode = (response as? HTTPURLResponse)?.statusCode{
+                if statusCode == 200{
+                    let jsonRespone = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    self.insertDataToCoreData(dict: jsonRespone as! [String : Any])
+                    completionHandler(jsonRespone as? [String : Any], true)
+                } else {
+                    completionHandler(nil, false)
+                }
+            } else{
                 completionHandler(nil, false)
             }
-
         })
         taskSession.resume()
     }

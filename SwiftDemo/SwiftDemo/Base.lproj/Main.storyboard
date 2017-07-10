@@ -39,6 +39,7 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bin Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lFE-5x-4o9">
                                 <rect key="frame" x="8" y="114" width="274" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="TextBin"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="RaE-QT-CmB"/>
                                 </constraints>
@@ -51,6 +52,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yxP-WX-wGh">
                                 <rect key="frame" x="8" y="154" width="274" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="TextLocation"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KMm-KM-vPh"/>
                                 </constraints>
@@ -63,6 +65,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Quantity" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VAR-yq-IAZ">
                                 <rect key="frame" x="8" y="194" width="274" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="TextQuantity"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="K6b-Sq-cWW"/>
                                 </constraints>
@@ -76,6 +79,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klz-pc-AC4">
                                 <rect key="frame" x="8" y="234" width="304" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Save Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="80M-6W-JFd"/>
                                 </constraints>
@@ -95,6 +99,7 @@
                             </pickerView>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g1K-2D-Bvh">
                                 <rect key="frame" x="290" y="118" width="22" height="22"/>
+                                <accessibility key="accessibilityConfiguration" label="Add Bin Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="0Qn-wT-6eo"/>
                                     <constraint firstAttribute="width" constant="22" id="RdW-kC-iDu"/>
@@ -105,6 +110,7 @@
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYh-XK-WAf">
                                 <rect key="frame" x="290" y="158" width="22" height="22"/>
+                                <accessibility key="accessibilityConfiguration" label="Add Location Button"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="XA4-KC-csw"/>
                                     <constraint firstAttribute="width" constant="22" id="kIT-1Y-Ycx"/>
@@ -115,6 +121,7 @@
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Item Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="COF-iM-GFf">
                                 <rect key="frame" x="8" y="74" width="274" height="30"/>
+                                <accessibility key="accessibilityConfiguration" label="TextItem"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="o6K-4j-HdU"/>
                                 </constraints>

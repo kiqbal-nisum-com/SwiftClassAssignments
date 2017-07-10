@@ -4,7 +4,8 @@
              { "id": 2, "name": "item2", "quantity":1,"binId": 1 },
              { "id": 3, "name": "item3", "quantity":1,"binId": 1 },
              { "id": 4, "name": "item4", "quantity":1,"binId": 1 },
-             { "id": 5, "name": "item5", "quantity":1,"binId": 1 }
+             { "id": 5, "name": "item5", "quantity":1,"binId": 1 },
+             { "id": 6, "name": "item6", "quantity":1,"binId": 1 }
             ],
     "bin":  [
                 { "id": 1, "name": "bin1", "locationId": 1 },

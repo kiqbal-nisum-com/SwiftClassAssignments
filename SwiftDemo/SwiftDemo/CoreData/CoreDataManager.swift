@@ -73,19 +73,20 @@ public final class CoreDataManager {
         }
     }()
     
-    public func saveViewContext() {
-        save(context: self.viewContext)
+    public func saveViewContext() -> Bool {
+        return save(context: self.viewContext)
     }
     
-    public func saveBackgroundContext() {
-        save(context: backgroundContext)
+    public func saveBackgroundContext() -> Bool {
+        return save(context: backgroundContext)
     }
     
-    func save(context: NSManagedObjectContext) {
+    func save(context: NSManagedObjectContext) ->Bool {
         if context.hasChanges {
             do {
                 try context.save()
                 print ("------ Model Saved ------")
+                return true
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -93,6 +94,7 @@ public final class CoreDataManager {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+        return false
     }
     
     //MARK: - iOS 10.0+ && macOS 10.12+ Stack
@@ -300,15 +302,15 @@ public final class CoreDataManager {
         return nil
     }
     
-    func saveManageObject( managedObject : NSManagedObject!,context: NSManagedObjectContext){
+    func saveManageObject( managedObject : NSManagedObject!,context: NSManagedObjectContext)-> Bool{
         
             context.insert(managedObject)
-            self.save(context: context)
+         return   self.save(context: context)
     }
     
-    func deleteManageObject(managedObject : NSManagedObject,context:NSManagedObjectContext){
+    func deleteManageObject(managedObject : NSManagedObject,context:NSManagedObjectContext) -> Bool{
             context.delete(managedObject)
-            self.save(context: context)
+         return   self.save(context: context)
         
     }
     func id<U>(object: AnyObject) -> U? {

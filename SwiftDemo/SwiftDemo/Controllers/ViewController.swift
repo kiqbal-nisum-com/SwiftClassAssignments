@@ -48,6 +48,7 @@ class ViewController: UIViewController,ViewControllerProtocol {
        
         super.viewDidLoad()
         binLocModel = BinLocModel()
+        binLocModel?.getAllEntityBaseModel()
         
         self.title = "Bin View"
         NetworkOperations.sharedInstance.getAllData(dataType: AppConstant.allData,completionHandler:  {[unowned self] (responseDict, success) in
@@ -62,10 +63,7 @@ class ViewController: UIViewController,ViewControllerProtocol {
   
     @IBAction func save(_ sender: UIButton) {
         
-//        if itemText.text?.characters.count != 0{
-//            let item = Item(itemnName: itemText.text, bin: Bin(binName: binText.text, location: Location(locationName: locationText.text)),qty : self.qtyText.text!)
-//        self.binLocModel?.items.append(item)
-//        }
+
         let context = CoreDataManager.shared.viewContext
         if binText!.text!.isEmpty{
             self.showErrorAlert(title: " Empty Field", message: EmptyFieldError.BinFieldEmpty.rawValue)
@@ -78,10 +76,13 @@ class ViewController: UIViewController,ViewControllerProtocol {
         let itemModel : ItemModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.ItemModel.rawValue,context: context)!
         itemModel.setObjectProperties(jsonDict:  [
             "name":self.itemText.text!,
-            "bin":selectedBin!.id,
-            "qty" : Int16(self.qtyText.text!)!
+            "id": itemModel.getObjectId(entityName: CoreDataModelName.ItemModel.rawValue, context: context),
+            "binId":selectedBin!.id,
+            "quantity" : Int16(self.qtyText.text!)!
             ], entityType: EntityType.Item.rawValue, context: context)
-        getCoreDataManagerObject().saveViewContext()
+        if getCoreDataManagerObject().saveViewContext(){
+            itemText.text = ""
+        }
     }
  
     @IBAction func unwindToMenu(segue: UIStoryboardSegue) {
@@ -139,31 +140,29 @@ extension ViewController : UITextFieldDelegate{
         switch (textField){
         case binText :
             self.binLocModel?.modelType = .Bin;
-            self.binLocModel?.setName();
             self.pickerView.isHidden = false;
             if self.binLocModel?.entityBaseModel != nil{
                 self.pickerData = (self.binLocModel!.entityBaseModel?.filter({ (entityModel) -> Bool in
-                    return entityModel.entityTypeModel! == CoreDataModelName.BinModel.rawValue
+                    return entityModel.entityTypeModel! == EntityType.Bin.rawValue
                 }))!
             }
             self.pickerView.reloadAllComponents() ;
             if (binText.text?.characters.count)! > 0 {
-                self.pickerView.selectRow((self.binLocModel?.getIndexOfValue(val: self.binText.text!))!, inComponent: 0, animated: true)
+                self.pickerView.selectRow((self.binLocModel?.getIndexOfValue(entityObj: self.selectedBin))!, inComponent: 0, animated: true)
             }
             ret = false ;
             
         case locationText :
             self.binLocModel?.modelType = .Location;
-            self.binLocModel?.setName();
             self.pickerView.isHidden = false;
             if self.binLocModel?.entityBaseModel != nil{
                 self.pickerData = (self.binLocModel!.entityBaseModel?.filter({ (entityModel) -> Bool in
-                    return entityModel.entityTypeModel! == CoreDataModelName.LocationModel.rawValue
+                    return entityModel.entityTypeModel! == EntityType.Location.rawValue
                 }))!
             }
             self.pickerView.reloadAllComponents();
             if (locationText.text?.characters.count)! > 0 {
-                self.pickerView.selectRow((self.binLocModel?.getIndexOfValue(val: self.locationText.text!))!, inComponent: 0, animated: true)
+                self.pickerView.selectRow((self.binLocModel?.getIndexOfValue(entityObj: self.selectedLoc!))!, inComponent: 0, animated: true)
             }
             ret = false
         default : break
@@ -196,19 +195,20 @@ extension ViewController{
                     let binModel : BinModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.BinModel.rawValue,context:context)!
                  
                     binModel.setObjectProperties(jsonDict:    [   "name" : alertController.textFields!.first!.text!,
-                                                                  "id" : binModel.getObjectId(entityName: EntityType.Bin.rawValue, context: context),
+                                                                  "id" : binModel.getObjectId(entityName: CoreDataModelName.BinModel.rawValue, context: context),
                                                                   "locationId" : self.selectedLoc!.id
                         ], entityType: EntityType.Bin.rawValue, context: context)
+                    self.selectedBin = binModel
                     self.getCoreDataManagerObject().saveViewContext()
-                    self.binLocModel?.addElement(name: alertController.textFields!.first!.text!)
-                    self.binLocModel?.setName()
                     self.setTitle(name: (alertController.textFields?.first?.text)!)
                     
                 } else{
                     let locModel : LocationModel = self.getCoreDataManagerObject().newManagedObject(entityName: CoreDataModelName.LocationModel.rawValue,context: context)!
                     locModel.setObjectProperties(jsonDict:    [   "name" : alertController.textFields!.first!.text!,
-                                                                  "id" : locModel.getObjectId(entityName: EntityType.Location.rawValue, context: context),
-                        ], entityType: EntityType.Bin.rawValue, context: context)
+                                                                  "id" : locModel.getObjectId(entityName: CoreDataModelName.LocationModel.rawValue, context: context),
+                        ], entityType: EntityType.Location.rawValue, context: context)
+                    
+                    self.selectedLoc = locModel
                     self.getCoreDataManagerObject().saveViewContext()
                     self.binLocModel?.addElement(name: alertController.textFields!.first!.text!)
                     self.binLocModel?.setName()
@@ -222,6 +222,7 @@ extension ViewController{
         alertController.addAction(saveAction)
         alertController.addTextField { (textField) in
             textField.placeholder = "\(entityType)"
+            textField.accessibilityLabel = "\(entityType.rawValue) Input"
         }
         self.present(alertController, animated: true, completion: nil)
     }

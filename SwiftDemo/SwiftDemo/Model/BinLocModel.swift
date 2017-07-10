@@ -33,9 +33,11 @@ class BinLocModel: NSObject {
     func setName (){
         names = (modelType == .Bin) ? bins : locations
     }
-    func getIndexOfValue(val : String!)-> Int{
-    
-      return  names.index(of: val)!
+    func getIndexOfValue(entityObj : EntityBaseModel!)-> Int{
+    let objects = entityBaseModel?.filter({ (model) -> Bool in
+        return model.entityTypeModel == modelType.rawValue
+    })
+      return  (objects?.index(of: entityObj))!
     }
    
     

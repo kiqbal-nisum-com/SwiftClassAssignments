@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SwiftDemo/Controllers/SearchViewController.swift"
-            timestampString = "520888054.704013"
+            timestampString = "521050748.579117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "controller(_:didChange:at:for:newIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,13 +42,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SwiftDemo/Controllers/SearchViewController.swift"
-            timestampString = "520888054.704013"
+            timestampString = "521050748.579117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "controller(_:didChange:at:for:newIndexPath:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftDemoTests/SwiftDemoTests.swift"
+            timestampString = "521419934.677129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "testCoreDataFetchedResultsController()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftDemoTests/SwiftDemoTests.swift"
+            timestampString = "521420337.944612"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "testCoreDataFetchEntityByName()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftDemoTests.SwiftDemoTests.testCoreDataFetchEntityByName () -&gt; ()"
+                  moduleName = "SwiftDemoTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/khurramiqbal/Documents/projects/BigStep/Nisum/Swift%20Demo/SwiftClassAssignments/SwiftDemo/SwiftDemoTests/SwiftDemoTests.swift"
+                  timestampString = "521420652.574837"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1887">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftDemoTests.SwiftDemoTests.(testCoreDataFetchEntityByName () -&gt; ()).(implicit closure #3)"
+                  moduleName = "SwiftDemoTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/khurramiqbal/Documents/projects/BigStep/Nisum/Swift%20Demo/SwiftClassAssignments/SwiftDemo/SwiftDemoTests/SwiftDemoTests.swift"
+                  timestampString = "521420652.57801"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "25">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -27,7 +27,7 @@ extension EntityBaseModel {
     }
     
     func getObjectId(entityName : String,context : NSManagedObjectContext)->Int16{
-        guard let entityId : NSArray = (CoreDataManager.shared.fetechRequestElements(entityName: "entityName", predicate: nil, context: context)) else{
+        guard let entityId : NSArray = (CoreDataManager.shared.fetechRequestElements(entityName: entityName, predicate: nil, context: context)) else{
             return 1
         }
         return Int16(entityId.count + 1)
