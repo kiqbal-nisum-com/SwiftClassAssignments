@@ -87,21 +87,20 @@ class ViewController: UIViewController {
     
     func setup(){
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue:textFieldNotification), object: nil, queue: nil, using:txtFieldActiveNotification )
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue:DeleteButtonTextFieldNotification), object: nil, queue: nil, using:reCalculateDenominationValue(notification:) )
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue:DeleteButtonTextFieldNotification), object: nil, queue: nil, using:clearButtonNotification(notification:) )
         
         customTextFieldViews = containerViewB.viewWithTag(100)?.subviews.filter{$0 is TextFieldView} as! [TextFieldView]
-        
     }
 
     @IBAction func numberPressed(_ sender: UIButton) {
         if selectedTextfieldView != nil{
             if !containerViewB.isHidden{
                 selectedTextfieldView.textField.text = selectedTextfieldView.textField.text! + (sender.titleLabel?.text)!
-                var newValue : Double  = Double((selectedTextfieldView.textField.text?.replacingOccurrences(of: "$", with: ""))!)!
+                var newValue : Double  = Double(String(format:"%.2f",Double((selectedTextfieldView.textField.text?.replacingOccurrences(of: "$", with: ""))!)!))!
                 if selectedTextfieldView.textField.text?.characters.count == 1{
                     newValue = newValue / 100
                 } else {
-                    newValue = newValue * 10
+                    newValue = Double(String(format : "%.2f",newValue * 10))!
                 }
                 if selectedTextfieldView.textField.text?.characters.count == 1{
                     selectedTextfieldView.removeAddClearButton(add: true)
@@ -116,6 +115,8 @@ class ViewController: UIViewController {
            calculateDenominationValue()
         }
     }
+    
+    
     
     @IBAction func keyboardToggleButton(_ sender: UIButton) {
         selectedTextfieldView.setViewState()
@@ -185,52 +186,64 @@ class ViewController: UIViewController {
         }
         selectedTextfieldView = notification.userInfo?["view"] as! TextFieldView
         activeDeactiveToggleButtons()
+        
+        if KeyboardViewHeight.constant == reconcileBtn.frame.height{
+            UIView.animate(withDuration: 0.5) {
+                self.KeyboardViewHeight.constant = 303
+                self.view.layoutIfNeeded()
+            }
+        }
     
     }
-    func reCalculateDenominationValue(notification : Notification) -> Void{
+    func clearButtonNotification(notification : Notification) -> Void{
         calculateDenominationValue()
     }
     
     func calculateDenominationValue(){
         totalValue = 0
         for textfieldView in customTextFieldViews {
-            totalDenominationValue(textFieldView: textfieldView)
+            totalDenominationValue(labelText : textfieldView.label.text!,textValue : textfieldView.textField.text!)
         }
         actualDeposited.text = String(totalValue)
         varianceLabel.text = String(totalValue - 0.40)
+        
+        varianceLabel.textColor = (totalValue - 0.40 >= 0) ? UIColor.black : UIColor.red
     }
     
-    func totalDenominationValue(textFieldView : TextFieldView){
-        if  textFieldView.textField.text == "" {
+    func resetTotalValue() {
+        totalValue = 0
+        
+    }
+    
+    func totalDenominationValue(labelText : String! , textValue : String!){
+        if  textValue == "" {
              return
         }
-        let denom = DenominationValueType(rawValue: textFieldView.label.text!)!
-
+        let denom = DenominationValueType(rawValue: labelText)!
         switch denom {
-            case .C : totalValue += Double(textFieldView.textField.text!)!.C
-            case .FIVE_C : totalValue += Double(textFieldView.textField.text!)!.FIVE_C
-            case .TEN_C : totalValue += Double(textFieldView.textField.text!)!.TEN_C
-            case .TWETYFIVE_C : totalValue += Double(textFieldView.textField.text!)!.TWETYFIVE_C
-            case .FIFTY_C : totalValue += Double(textFieldView.textField.text!)!.FIFTY_C
-            case .HUNDRED_C : totalValue += Double(textFieldView.textField.text!)!.HUNDRED_C
-            case .PENNIES : totalValue += Double(textFieldView.textField.text!)!.PENNIES
-            case .NICKEL : totalValue += Double(textFieldView.textField.text!)!.NICKEL
-            case .DIMES: totalValue += Double(textFieldView.textField.text!)!.DIMES
-            case .QUARTERS: totalValue += Double(textFieldView.textField.text!)!.QUARTERS
-            case .Dollar1: totalValue += Double(textFieldView.textField.text!)!.Dollar1
-            case .Dollar2: totalValue += Double(textFieldView.textField.text!)!.Dollar2
-            case .Dollar5: totalValue += Double(textFieldView.textField.text!)!.Dollar5
-            case .Dollar10: totalValue += Double(textFieldView.textField.text!)!.Dollar10
-            case .Dollar20: totalValue += Double(textFieldView.textField.text!)!.Dollar20
-            case .Dollar50: totalValue += Double(textFieldView.textField.text!)!.Dollar50
-            case .Dollar100: totalValue += Double(textFieldView.textField.text!)!.Dollar100
-            case .ACTUAL_AMOUNT: totalValue += Double(textFieldView.textField.text!.replacingOccurrences(of: "$", with: ""))!.ACTUAL_AMOUNT;
+            case .C : totalValue += Double(textValue)!.C
+            case .FIVE_C : totalValue += Double(textValue)!.FIVE_C
+            case .TEN_C : totalValue += Double(textValue)!.TEN_C
+            case .TWETYFIVE_C : totalValue += Double(textValue)!.TWETYFIVE_C
+            case .FIFTY_C : totalValue += Double(textValue)!.FIFTY_C
+            case .HUNDRED_C : totalValue += Double(textValue)!.HUNDRED_C
+            case .PENNIES : totalValue += Double(textValue)!.PENNIES
+            case .NICKEL : totalValue += Double(textValue)!.NICKEL
+            case .DIMES: totalValue += Double(textValue)!.DIMES
+            case .QUARTERS: totalValue += Double(textValue)!.QUARTERS
+            case .Dollar1: totalValue += Double(textValue)!.Dollar1
+            case .Dollar2: totalValue += Double(textValue)!.Dollar2
+            case .Dollar5: totalValue += Double(textValue)!.Dollar5
+            case .Dollar10: totalValue += Double(textValue)!.Dollar10
+            case .Dollar20: totalValue += Double(textValue)!.Dollar20
+            case .Dollar50: totalValue += Double(textValue)!.Dollar50
+            case .Dollar100: totalValue += Double(textValue)!.Dollar100
+            case .ACTUAL_AMOUNT: totalValue += Double(textValue.replacingOccurrences(of: "$", with: ""))!.ACTUAL_AMOUNT;
         }
     }
     
     func activeDeactiveToggleButtons(){
     
-        
         if selectedTextfieldView == nil || ( selectedTextfieldView == customTextFieldViews.first && selectedTextfieldView == customTextFieldViews.last) {
             self.nextTextField.isEnabled = false
             self.previousTextField.isEnabled = false

@@ -26,6 +26,14 @@ class TextFieldView: UIView {
         self.setupRightView()
     }
     
+  
+    
+}
+extension TextFieldView{
+    func  viewWithTag<T>(tag : Int) -> T{
+        return self.viewWithTag(tag) as! T
+    }
+    
     func setViewState(){
         
         let color = (textField.text?.isEmpty)! ? UIColor.customGreyColor() : UIColor.customBlueColor()
@@ -33,12 +41,6 @@ class TextFieldView: UIView {
         self.label.textColor =  color
         self.textField.layer.removeAllAnimations()
         self.textField.rightView = nil
-    }
-    
-}
-extension TextFieldView{
-    func  viewWithTag<T>(tag : Int) -> T{
-        return self.viewWithTag(tag) as! T
     }
     
     func setupRightView(){

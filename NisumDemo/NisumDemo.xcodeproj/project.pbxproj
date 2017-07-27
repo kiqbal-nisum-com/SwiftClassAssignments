@@ -8,28 +8,51 @@
 
 /* Begin PBXBuildFile section */
 		D50270781F1E153E00D2091D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50270771F1E153E00D2091D /* AppDelegate.swift */; };
-		D502707A1F1E153E00D2091D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50270791F1E153E00D2091D /* ViewController.swift */; };
 		D502707D1F1E153E00D2091D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D502707B1F1E153E00D2091D /* Main.storyboard */; };
 		D502707F1F1E153E00D2091D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D502707E1F1E153E00D2091D /* Assets.xcassets */; };
 		D50270821F1E153E00D2091D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50270801F1E153E00D2091D /* LaunchScreen.storyboard */; };
-		D502708B1F1E5E6600D2091D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502708A1F1E5E6600D2091D /* CustomTextField.swift */; };
-		D5AD50881F1F861D00F62E29 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD50871F1F861D00F62E29 /* TextFieldView.swift */; };
+		D5AD50901F2633D000F62E29 /* NisumDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD508F1F2633D000F62E29 /* NisumDemoTests.swift */; };
+		D5AD509E1F264E4800F62E29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD509A1F264E4800F62E29 /* ViewController.swift */; };
+		D5AD509F1F264E4800F62E29 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD509C1F264E4800F62E29 /* CustomTextField.swift */; };
+		D5AD50A01F264E4800F62E29 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AD509D1F264E4800F62E29 /* TextFieldView.swift */; };
+		D5C191FB1F2A132E00B95A61 /* CustomSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C191FA1F2A132E00B95A61 /* CustomSegmentControl.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D5AD50921F2633D000F62E29 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D502706C1F1E153E00D2091D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D50270731F1E153E00D2091D;
+			remoteInfo = NisumDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		D50270741F1E153E00D2091D /* NisumDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NisumDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D50270771F1E153E00D2091D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D50270791F1E153E00D2091D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D502707C1F1E153E00D2091D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D502707E1F1E153E00D2091D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D50270811F1E153E00D2091D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D50270831F1E153E00D2091D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D502708A1F1E5E6600D2091D /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		D5AD50871F1F861D00F62E29 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		D5AD508D1F2633D000F62E29 /* NisumDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NisumDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5AD508F1F2633D000F62E29 /* NisumDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NisumDemoTests.swift; sourceTree = "<group>"; };
+		D5AD50911F2633D000F62E29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5AD509A1F264E4800F62E29 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D5AD509C1F264E4800F62E29 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		D5AD509D1F264E4800F62E29 /* TextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		D5C191FA1F2A132E00B95A61 /* CustomSegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegmentControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		D50270711F1E153E00D2091D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5AD508A1F2633D000F62E29 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				D50270761F1E153E00D2091D /* NisumDemo */,
+				D5AD508E1F2633D000F62E29 /* NisumDemoTests */,
 				D50270751F1E153E00D2091D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				D50270741F1E153E00D2091D /* NisumDemo.app */,
+				D5AD508D1F2633D000F62E29 /* NisumDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,24 +83,50 @@
 		D50270761F1E153E00D2091D /* NisumDemo */ = {
 			isa = PBXGroup;
 			children = (
-				D50270891F1E5E3000D2091D /* Views */,
+				D5AD50991F264E4800F62E29 /* ViewController */,
+				D5AD509B1F264E4800F62E29 /* Views */,
+				D5AD50981F2634B700F62E29 /* Resources */,
 				D50270771F1E153E00D2091D /* AppDelegate.swift */,
-				D50270791F1E153E00D2091D /* ViewController.swift */,
-				D502707B1F1E153E00D2091D /* Main.storyboard */,
 				D502707E1F1E153E00D2091D /* Assets.xcassets */,
-				D50270801F1E153E00D2091D /* LaunchScreen.storyboard */,
 				D50270831F1E153E00D2091D /* Info.plist */,
 			);
 			path = NisumDemo;
 			sourceTree = "<group>";
 		};
-		D50270891F1E5E3000D2091D /* Views */ = {
+		D5AD508E1F2633D000F62E29 /* NisumDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				D502708A1F1E5E6600D2091D /* CustomTextField.swift */,
-				D5AD50871F1F861D00F62E29 /* TextFieldView.swift */,
+				D5AD508F1F2633D000F62E29 /* NisumDemoTests.swift */,
+				D5AD50911F2633D000F62E29 /* Info.plist */,
 			);
-			name = Views;
+			path = NisumDemoTests;
+			sourceTree = "<group>";
+		};
+		D5AD50981F2634B700F62E29 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D50270801F1E153E00D2091D /* LaunchScreen.storyboard */,
+				D502707B1F1E153E00D2091D /* Main.storyboard */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D5AD50991F264E4800F62E29 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D5AD509A1F264E4800F62E29 /* ViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D5AD509B1F264E4800F62E29 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D5AD509C1F264E4800F62E29 /* CustomTextField.swift */,
+				D5AD509D1F264E4800F62E29 /* TextFieldView.swift */,
+				D5C191FA1F2A132E00B95A61 /* CustomSegmentControl.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -98,6 +149,24 @@
 			productReference = D50270741F1E153E00D2091D /* NisumDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D5AD508C1F2633D000F62E29 /* NisumDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5AD50941F2633D000F62E29 /* Build configuration list for PBXNativeTarget "NisumDemoTests" */;
+			buildPhases = (
+				D5AD50891F2633D000F62E29 /* Sources */,
+				D5AD508A1F2633D000F62E29 /* Frameworks */,
+				D5AD508B1F2633D000F62E29 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D5AD50931F2633D000F62E29 /* PBXTargetDependency */,
+			);
+			name = NisumDemoTests;
+			productName = NisumDemoTests;
+			productReference = D5AD508D1F2633D000F62E29 /* NisumDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -111,6 +180,11 @@
 					D50270731F1E153E00D2091D = {
 						CreatedOnToolsVersion = 8.3.2;
 						ProvisioningStyle = Automatic;
+					};
+					D5AD508C1F2633D000F62E29 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D50270731F1E153E00D2091D;
 					};
 				};
 			};
@@ -128,6 +202,7 @@
 			projectRoot = "";
 			targets = (
 				D50270731F1E153E00D2091D /* NisumDemo */,
+				D5AD508C1F2633D000F62E29 /* NisumDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -143,6 +218,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D5AD508B1F2633D000F62E29 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -150,14 +232,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D502707A1F1E153E00D2091D /* ViewController.swift in Sources */,
+				D5AD509E1F264E4800F62E29 /* ViewController.swift in Sources */,
 				D50270781F1E153E00D2091D /* AppDelegate.swift in Sources */,
-				D5AD50881F1F861D00F62E29 /* TextFieldView.swift in Sources */,
-				D502708B1F1E5E6600D2091D /* CustomTextField.swift in Sources */,
+				D5AD50A01F264E4800F62E29 /* TextFieldView.swift in Sources */,
+				D5AD509F1F264E4800F62E29 /* CustomTextField.swift in Sources */,
+				D5C191FB1F2A132E00B95A61 /* CustomSegmentControl.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5AD50891F2633D000F62E29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5AD50901F2633D000F62E29 /* NisumDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D5AD50931F2633D000F62E29 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D50270731F1E153E00D2091D /* NisumDemo */;
+			targetProxy = D5AD50921F2633D000F62E29 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D502707B1F1E153E00D2091D /* Main.storyboard */ = {
@@ -298,6 +397,32 @@
 			};
 			name = Release;
 		};
+		D5AD50951F2633D000F62E29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = NisumDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.test.-.NisumDemoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NisumDemo.app/NisumDemo";
+			};
+			name = Debug;
+		};
+		D5AD50961F2633D000F62E29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = NisumDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.test.-.NisumDemoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NisumDemo.app/NisumDemo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -315,6 +440,15 @@
 			buildConfigurations = (
 				D50270871F1E153E00D2091D /* Debug */,
 				D50270881F1E153E00D2091D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5AD50941F2633D000F62E29 /* Build configuration list for PBXNativeTarget "NisumDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5AD50951F2633D000F62E29 /* Debug */,
+				D5AD50961F2633D000F62E29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
