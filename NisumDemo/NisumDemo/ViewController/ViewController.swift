@@ -131,7 +131,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func segmentControlValueChange(sender : UISegmentedControl){
-   
+        
+        (sender as! CustomSegmentControl).animateBottomSlider()
+        
         for item in customTextFieldViews{
             item.textField.text = ""
         }

@@ -26,8 +26,6 @@ class TextFieldView: UIView {
         self.setupRightView()
     }
     
-  
-    
 }
 extension TextFieldView{
     func  viewWithTag<T>(tag : Int) -> T{
